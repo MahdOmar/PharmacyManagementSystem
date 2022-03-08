@@ -1,4 +1,3 @@
-
 @extends('layouts.dashboard')
 
 @section('content')
@@ -186,7 +185,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
   <script>
-
 $(function(){
        
        $('.submit').click(function(){
@@ -196,7 +194,6 @@ $(function(){
      }
    });
            
-
          
           var data = {
            
@@ -216,7 +213,6 @@ $(function(){
              dataType: 'json',
              success: function(result)
              {
-
               if(result.error)
                {
                  console.log(result.error);
@@ -230,16 +226,13 @@ $(function(){
             $('#idp').val('');
             $('#Name').val('');
             $('#Quan').val('1');
-
             $
-
             $('.success').text('Sale Added')
             
              $('tbody').html('')
           
            //  $('.success').text(result.success)
        
-
             
              $.each(result, function(key, item){
               var dateString = moment(item.created_at).format('DD/MM/YYYY');
@@ -255,17 +248,12 @@ $(function(){
                 <button onclick="deletesale('+item.id+')" id="btn'+item.id+'" class="btn btn-danger" ><i class="fas fa-trash"></i></button>\
         \
               </tr>')
-
-
              })
            }
             
            setTimeout(function() { $('.success').text('');}, 1000);
-
-
             /*    */
              
-
              },
              error: function()
             {
@@ -276,27 +264,19 @@ $(function(){
        });
       
    });
-
    function getsale(id){
-
     $('.success').text("")
-
     $.ajaxSetup({
      headers: {
        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
      }
    });
            
-
          
           var data = {
-
             'id': id,
            
           }
-
-
-
           $.ajax({
              url : '/dashboard/sales/show',
              data: data,
@@ -308,17 +288,12 @@ $(function(){
               
                 $('#id').val(result.sale.id)
                 $('#idpE').val(result.sale.medicine.id)
-
                 $('#NameE').val(result.sale.medicine.Designation);
                 $('#QuanE').val(result.sale.Quantity);
                
-
-
-
               
             
               
-
              }
           
             ,
@@ -328,11 +303,7 @@ $(function(){
                 alert('error...');
             }
           });
-
    }
-
-
-
           $(function(){
        
        $('.update').click(function(){
@@ -372,12 +343,10 @@ $(function(){
             
            else 
            {
-
             $('.successe').text('Sale Edited')
              $('tbody').html('')
           
            
-
             
              $.each(result, function(key, item){
               var dateString = moment(item.created_at).format('DD-MM-YYYY');
@@ -393,19 +362,11 @@ $(function(){
                 <button onclick="deletesale('+item.id+')" id="btn'+item.id+'" class="btn btn-danger" ><i class="fas fa-trash"></i></button>\
         \
               </tr>')
-
-
              })
-
-
              setTimeout(function() { $('.successe').text('');
              $('#edit').modal('toggle');}, 1000);
-
-
             }
-
            
-
              },
              error: function()
             {
@@ -416,16 +377,13 @@ $(function(){
        });
       
    });
-
    function deletesale(id)
-
    {
       $.ajaxSetup({
      headers: {
        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
              }       
        });
-
        swal({
         title: 'Are you sure?',
         text: 'This record and it`s details will be permanantly deleted!',
@@ -446,7 +404,6 @@ $(function(){
             
               $("#btn"+id).closest("tr").remove();
           
-
              },
              error: function()
             {
@@ -454,37 +411,26 @@ $(function(){
                 alert('error...');
             }
           });
-
         }
     });
-
-
    }
    $(document).ready(function(){
-
     $(document).on('blur','#Name ,#NameE', function() {
       $('#medicineList').fadeOut(); 
       $('#medicineListE').fadeOut(); 
   
 });
-
-
    $('#Name').keyup(function(){ 
-
     $.ajaxSetup({
      headers: {
        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
      }
    });
         var query = $(this).val();
-
         if(query == '')
         {
           $('#medicineList').fadeOut();  
-
         }
-
-
         else(query != '')
         {
         
@@ -496,13 +442,11 @@ $(function(){
             console.log(data)
            $('#medicineList').fadeIn();  
           $('#medicineList').html(data);
-
                     console.log( $('#medicineList').html(data));
           }
          });
         }
     });
-
     $(document).on('click', 'li', function(){ 
       if( $('#Name').val() != '')
       {
@@ -512,27 +456,19 @@ $(function(){
       } 
        
     });  
-
-
 });
-
 $(document).ready(function(){
    $('#NameE').keyup(function(){ 
-
     $.ajaxSetup({
      headers: {
        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
      }
    });
         var query = $(this).val();
-
         if(query == '')
         {
           $('#medicineListE').fadeOut();  
-
         }
-
-
         else(query != '')
         {
         
@@ -544,17 +480,14 @@ $(document).ready(function(){
             console.log(data)
            $('#medicineListE').fadeIn();  
           $('#medicineListE').html(data);
-
                     console.log( $('#medicineListE').html(data));
           }
          });
         }
     });
-
     $(document).on('click', 'li', function(){  
       if( $('#NameE').val() != '')
       {
-
         $('#NameE').val($(this).text());  
         $('#idpE').val($(this).attr('id'));  
        
@@ -562,16 +495,8 @@ $(document).ready(function(){
       }
         
     });  
-
    
 });
-
-
-
-
    
    
-
-
-
   </script>

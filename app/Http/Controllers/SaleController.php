@@ -52,6 +52,7 @@ class SaleController extends Controller
         
 
           $stock = $product->Quantity;
+        
 
          
 
@@ -103,6 +104,8 @@ class SaleController extends Controller
           
            $data = DB::table('medicines')
              ->where('Designation', 'LIKE', "{$query}%")
+             ->where('Quantity', '>', "0")
+             ->orderBy('Exp_date', 'ASC')
              ->get();
             
            $output = '<ul class="dropdown-menu text-capitalize" style="display:block; position:relative">';
@@ -137,18 +140,35 @@ class SaleController extends Controller
         public function update()
         {
           $product = Medicine::find(request('Name'));
-          error_log($product);
+          $sale = Sale::find(request('id'));
+         
 
-        
+          if($product->id == $sale->Product_id)
+          {
+            $product->Quantity = $product->Quantity + $sale->Quantity;
+            
+          }
+
+          else{
+           
+            $old_product = Medicine::find($sale->Product_id);
+           
+            $old_product->Quantity += $sale->Quantity;
+           
+            
+            $old_product->save();
+          }
+          
+         
  
 
-          $stock = $product->Quantity;
+          $stock = $product->Quantity ;
 
           if( $stock >= request('Quan') )
           {
-           $sale = Sale::find(request('id'));
-          $product = Medicine::find(request('Name'));
-          $product->Quantity =  $product->Quantity + $sale->Quantity - request('Quan');
+         
+         
+          $product->Quantity =  $product->Quantity - request('Quan');
           $sale->Product_id = request('Name');
           $sale->Quantity = request('Quan');
           $sale->save();
